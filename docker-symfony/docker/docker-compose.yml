@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  nginx:
+    image: library/nginx:1.19.6-alpine
+    profiles: ["dev"]
+    container_name: nginx
+
+  php-fpm:
+    image: php-fpm:latest
+    profiles: ["dev", "build"]
+
+  custom-app-1:
+    profiles: ["custom1", "build"]
+    image: php-fpm:latest
+    container_name: custom-app-1
+    build:
+      context: ./folder/
+      dockerfile: ./docker/customappone.dockerfile
+
+  custom-app-2:
+    profiles: ["custom2"]
+    image: php-fpm:latest
+    container_name: custom-app-2
+    build:
+      context: ./folder/
+      dockerfile: ./docker/customapptwo.dockerfile
+
+  custom-app-3:
+    profiles: ["custom3"]
+    image: php-fpm:latest
+    container_name: custom-app-1
+    build:
+      context: ./folder/
+      dockerfile: ./docker/customappthree.dockerfile
